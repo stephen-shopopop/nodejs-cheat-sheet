@@ -1,7 +1,7 @@
 {
-  "name": "node-typescript-workspace",
+  "name": "nodejs-cheat-sheet",
   "version": "1.0.0",
-  "description": "workspace typescript nodejs with ts-standard",
+  "description": "nodejs cheat sheet",
   "private": true,
   "engines": {
     "node": ">=16.15.0",
@@ -14,10 +14,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/{repository}.git"
+    "url": "git+https://github.com/nodejs-cheat-sheet.git"
   },
   "bugs": {
-    "url": "https://github.com/{repository}/issues"
+    "url": "https://github.com/nodejs-cheat-sheet/issues"
   },
   "contributors": [
     "stephen.deletang@shopopop.com"
@@ -38,7 +38,8 @@
     "fix": "standard-version -- --release-as minor"
   },
   "keywords": [
-    "standard"
+    "nodejs",
+    "typescript"
   ],
   "author": "tech-shopopop <tech@shopopop.com>",
   "license": "ISC",
