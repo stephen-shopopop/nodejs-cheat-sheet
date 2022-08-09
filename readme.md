@@ -1,6 +1,6 @@
 [![Minimal node version](https://img.shields.io/static/v1?label=node&message=%3E=16.15&logo=node.js&color)](https://nodejs.org/about/releases/)
 [![Minimal npm version](https://img.shields.io/static/v1?label=npm&message=%3E=8.5.5&logo=npm&color)](https://github.com/npm/cli/releases)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/stephen-shopopop/node-ts/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/stephen-shopopop/nodejs-cheat-sheet/graphs/commit-activity)
 [![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
 [![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
 [![Visual Studio Code](https://img.shields.io/badge/--007ACC?logo=visual%20studio%20code&logoColor=ffffff)](https://code.visualstudio.com/)
@@ -15,6 +15,12 @@ Cheat sheet for nodejs (typescript)
 
 - [macos/linux](https://github.com/nvm-sh/nvm) or use Makefile command: ```make nvm```
 - [windows](https://github.com/coreybutler/nvm-windows)
+
+## Docs
+
+### Summary
+
+----
 
 ## Contributing
 
@@ -73,16 +79,6 @@ npm run dev -ws
 7. npm run release - Tag release
 8. npm run prerelease - Tag pre release
 9. npm run fix - Tag fix
-
-## Production
-
-```bash
-npm i --production
-```
-
-## Docs
-
-### Summary
 
 ### Package maintenance
 
