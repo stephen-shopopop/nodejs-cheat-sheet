@@ -54,12 +54,6 @@ Run test only in package:
 npm test --packages/hello
 ```
 
-Publish all package (optionnal):
-
-```shell
-npm publish --workspaces --access public
-```
-
 Extra:
 
 ```shell
