@@ -14,10 +14,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nodejs-cheat-sheet.git"
+    "url": "git+https://github.com/stephen-shopopop/nodejs-cheat-sheet.git"
   },
   "bugs": {
-    "url": "https://github.com/nodejs-cheat-sheet/issues"
+    "url": "https://github.com/stephen-shopopop/nodejs-cheat-sheet/issues"
   },
   "contributors": [
     "stephen.deletang@shopopop.com"
