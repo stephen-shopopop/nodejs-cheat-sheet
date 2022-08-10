@@ -23,6 +23,9 @@
     "stephen.deletang@shopopop.com"
   ],
   "scripts": {
+    "start:cluster": "npm run start -w=@stephen-shopopop/multithread-cluster",
+    "start:fork": "npm run start -w=@stephen-shopopop/multithread-fork",
+    "start:worker": "npm run start -w=@stephen-shopopop/multithread-worker",
     "build": "npm run compile -ws",
     "prepare": "npm run build",
     "test": "jest --reporters=default",
