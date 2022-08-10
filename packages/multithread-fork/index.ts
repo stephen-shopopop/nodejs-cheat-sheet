@@ -9,8 +9,8 @@ export function newWorker (path: string, context: string[] = [], options?: ForkO
 
   // listener
   worker.on('disconnect', () => logger.log(`ℹ [disonnect] Worker pid ${String(worker.pid)} disconnect`))
-  worker.on('error', (e) => logger.warn(`⚠ [error] worker pid ${String(worker.pid)} with error:`, e))
-  worker.on('close', (code) => {
+  worker.on('error', (e: unknown) => logger.warn(`⚠ [error] worker pid ${String(worker.pid)} with error:`, e))
+  worker.on('close', (code: number) => {
     logger.log(`⚠ [close] worker pid ${String(worker.pid)} - code: ${String(code)}`)
 
     // kill worker

@@ -5,7 +5,7 @@ import { isMainThread, parentPort, Worker } from 'worker_threads'
 const logger = new Console({ stdout: process.stdout, stderr: process.stderr })
 
 if (isMainThread) {
-  const workersList = []
+  const workersList: Worker[] = []
 
   let numWorkers = cpus().length
 
