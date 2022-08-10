@@ -11,12 +11,10 @@
 
 Multithread with workerThread
 
+Les threads de travail peuvent exécuter des opérations JavaScript gourmandes en CPU sans bloquer l'exécution de la boucle d'événements. Contrairement à child_process, worker_threads peut partager de la mémoire en transférant des instances ArrayBuffer ou en partageant des instances SharedArrayBuffer.
+
 ## Contributing
 
 1. npm run start -  Start project
 2. npm run dev - Start project with ts-node (dev only)
 3. npm run compile - Build ts
-
-## Docs
-
-### Summary

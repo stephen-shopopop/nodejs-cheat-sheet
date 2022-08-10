@@ -20,6 +20,11 @@ Cheat sheet for nodejs (typescript)
 
 ### Summary
 
+1. Multithread
+   1. Child process - fork [example](./packages/multithread-fork/readme.md)
+   2. Worker thread [example](./packages/multithread-worker/readme.md)
+   3. Cluster [example](./packages/multithread-cluster/readme.md)
+
 ----
 
 ## Contributing

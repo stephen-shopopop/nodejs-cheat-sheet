@@ -11,12 +11,12 @@
 
 Multithread with child process: fork
 
+Exécution de processus enfants parallèles dans Node.js
+
+Nous lançons un processus enfant à l'aide du module child_process de Node. Les processus enfants ou sous-processus créés peuvent communiquer via un système de messagerie. Ils s'exécutent séparément, ce qui vous permet de diviser et d'exécuter votre script d'application à partir de différents processus.
+
 ## Contributing
 
 1. npm run start -  Start project
 2. npm run dev - Start project with ts-node (dev only)
 3. npm run compile - Build ts
-
-## Docs
-
-### Summary

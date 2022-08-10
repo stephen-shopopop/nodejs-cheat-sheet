@@ -11,12 +11,10 @@
 
 Multithread with cluster (scalability)
 
+La nature monothread de NodeJ utilise par défaut un seul cœur de processeur. Par conséquent, NodeJs a introduit un module de cluster pour générer des processus. "Cluster" a été introduit pour mettre à l'échelle l'exécution d'une application sur plusieurs cœurs de processeur en créant des processus de travail. Les processus de travail partagent un seul port, par conséquent, les demandes sont acheminées via un seul port.
+
 ## Contributing
 
 1. npm run start -  Start project
 2. npm run dev - Start project with ts-node (dev only)
 3. npm run compile - Build ts
-
-## Docs
-
-### Summary
