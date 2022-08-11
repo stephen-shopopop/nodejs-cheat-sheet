@@ -39,12 +39,6 @@ npm run start -w=@stephen-shopopop/hello
 npm run dev -w=@stephen-shopopop/hello
 ```
 
-Add package in workspace:
-
-```shell
-npm init --scope=@stephen-shopopop -y -w ./packages/hello
-```
-
 Add dependencies in package:
 
 ```shell
@@ -58,16 +52,6 @@ Run test only in package:
 
 ```shell
 npm test --packages/hello
-```
-
-Extra:
-
-```shell
-// Start all projets
-npm run start -ws
-
-// Start all projets in dev mode
-npm run dev -ws
 ```
 
 1. npm run test -  Run tests.
