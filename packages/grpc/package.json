@@ -1,0 +1,27 @@
+{
+  "name": "@stephen-shopopop/grpc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node index.ts",
+    "compile": "rimraf dist/* && tsc -p tsconfig.pkg.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephen-shopopop/nodejs-cheat-sheet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephen-shopopop/nodejs-cheat-sheet/issues"
+  },
+  "homepage": "https://github.com/stephen-shopopop/nodejs-cheat-sheet#readme",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.6.10",
+    "@grpc/proto-loader": "^0.7.0"
+  }
+}
