@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-package posts_package;
-
 message Posts {
   string id = 1;
   string title = 2;

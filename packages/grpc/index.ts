@@ -1,11 +1,12 @@
-import grpc from '@grpc/grpc-js'
-import protoLoader from '@grpc/proto-loader'
+import { GrpcObject, loadPackageDefinition, Server, ServerCredentials } from '@grpc/grpc-js'
+import protoLoader, { loadSync } from '@grpc/proto-loader'
+import { IPosts } from './proto/posts'
 
-interface Posts {
-  id: string
-  title: string
-  body: string
-  category: string
+interface ServerDefinition extends GrpcObject {
+  service: any
+}
+interface ServerPackage extends GrpcObject {
+  [name: string]: ServerDefinition
 }
 
 const PROTO_PATH = './proto/posts.proto'
@@ -18,20 +19,41 @@ const options: protoLoader.Options = {
   oneofs: true
 }
 
-let posts: Posts[] = [
+let posts: IPosts[] = [
   { id: '1', title: 'My first post', body: 'lorem ipsum', category: 'tag' },
   { id: '2', title: 'My second post', body: 'lorem ipsum', category: 'car' }
 ]
 
-const packageDefinition = protoLoader.loadSync(PROTO_PATH, options)
-const postsProto = grpc.loadPackageDefinition(packageDefinition)
-const server = new grpc.Server()
+const packageDefinition = loadSync(PROTO_PATH, options)
+
+const postsProto = loadPackageDefinition(packageDefinition) as ServerPackage
+const server = new Server()
 
 server.addService(postsProto.PostsService.service, {
-  getAllPosts: (_: any, cb: Function) => cb(null, posts),
+  getAllPosts: (_: any, cb: Function): void => {
+    cb(null, { posts: posts })
+  },
   getPosts: (_: any, cb: Function) => {
-    posts = posts.filter(({ id }) => id !== '1')
+    // console.log(_)
+    const [postsItem] = posts.filter(({ id }) => id === '1')
+    cb(null, postsItem)
+  },
+  deletePosts: (_: any, cb: Function): void => {
+    const postsId = _.request.id
+    posts = posts.filter(({ id }) => id !== postsId)
     cb(null, {})
+  },
+  editPosts: (_: any, cb: Function) => {
+    const postsId = _.request.id
+    const postsItem = posts.find(({ id }) => postsId === id)
+    if (postsItem !== undefined) {
+      postsItem.body = _.request.body
+      postsItem.category = _.request.postImage
+      postsItem.title = _.request.title
+      cb(null, postsItem ?? {})
+    }
+
+    cb(null, postsItem ?? {})
   },
   addPosts: (call: any, cb: Function): void => {
     const _posts = { id: Date.now(), ...call.request }
@@ -42,7 +64,7 @@ server.addService(postsProto.PostsService.service, {
 
 server.bindAsync(
   '127.0.0.1:50051',
-  grpc.ServerCredentials.createInsecure(),
+  ServerCredentials.createInsecure(),
   (error: Error | null, port: number) => {
     if (error !== null) {
       console.error(`Server error: ${error.message}`)
