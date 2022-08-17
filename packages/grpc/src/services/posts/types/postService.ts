@@ -3,7 +3,7 @@ import { Posts } from './posts'
 
 /** Handle */
 export interface Handle<T> {
-  error: Error | null
+  error: (Error | null)
   response?: T
 }
 
