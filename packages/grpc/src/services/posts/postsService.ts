@@ -1,11 +1,9 @@
-// import { IPosts } from '../../models/posts'
-import { IPosts } from '../../posts'
-import { PostsService } from './types'
+import { Posts, PostsService } from './types'
 
 /**
  * Data
  */
-let posts: IPosts[] = [
+let posts: Posts[] = [
   { id: '1', title: 'My first post', body: 'lorem ipsum', category: 'tag' },
   { id: '2', title: 'My second post', body: 'lorem ipsum', category: 'car' }
 ]

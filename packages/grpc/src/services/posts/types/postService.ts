@@ -1,16 +1,16 @@
 import { UntypedServiceImplementation } from '@grpc/grpc-js'
-import { IPosts } from 'packages/grpc/src/models/posts'
+import { Posts } from './posts'
 
 export type CallBack<T> = (error: (Error|null), response?: T) => void
 
-export interface Posts {
-  posts: IPosts[]
+export interface PostsList {
+  posts: Posts[]
 }
 
 export interface PostsService extends UntypedServiceImplementation {
-  getAllPosts: (call: any, callback: CallBack<Posts>) => void
-  getPosts: (call: any, callback: CallBack<IPosts>) => void
+  getAllPosts: (call: any, callback: CallBack<PostsList>) => void
+  getPosts: (call: any, callback: CallBack<Posts>) => void
   deletePosts: (call: any, callback: CallBack<{}>) => void
-  editPosts: (call: any, callback: CallBack<IPosts>) => void
-  addPosts: (call: any, callback: CallBack<IPosts>) => void
+  editPosts: (call: any, callback: CallBack<Posts>) => void
+  addPosts: (call: any, callback: CallBack<Posts>) => void
 }
