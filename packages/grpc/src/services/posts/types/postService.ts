@@ -4,7 +4,7 @@ import { Posts } from './posts'
 /** Handle */
 export interface Handle<T> {
   error: Error | null
-  response: T
+  response?: T
 }
 
 /** Callback */
