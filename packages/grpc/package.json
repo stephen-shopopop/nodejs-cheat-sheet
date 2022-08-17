@@ -5,9 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "ts-node index.ts",
+    "dev": "ts-node src/index.ts",
     "compile": "rimraf dist/* && tsc -p tsconfig.pkg.json",
-    "proto": "pbjs -t static-module -w commonjs -o ./proto/posts.js ./proto/*.proto && pbts -o ./proto/posts.d.ts ./proto/posts.js && tsc"
+    "proto": "pbjs -t static-module -w commonjs -o ./proto/posts.js ./proto/*.proto && pbts -o ./src/posts.d.ts ./proto/posts.js && tsc"
   },
   "repository": {
     "type": "git",

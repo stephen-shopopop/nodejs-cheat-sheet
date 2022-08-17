@@ -54,7 +54,8 @@
       "dist",
       "docs",
       "jest.config.ts",
-      "commitlint.config.js"
+      "commitlint.config.js",
+      "*.d.ts"
     ]
   },
   "workspaces": [
