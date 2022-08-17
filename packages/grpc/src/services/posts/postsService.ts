@@ -1,41 +1,30 @@
-import { Posts, PostsService } from './types'
-
-/**
- * Data
- */
-let posts: Posts[] = [
-  { id: '1', title: 'My first post', body: 'lorem ipsum', category: 'tag' },
-  { id: '2', title: 'My second post', body: 'lorem ipsum', category: 'car' }
-]
+import { handleAddPosts, handleAllPosts, handleDeletePosts, handleEditPosts, handlePosts } from './posts'
+import { PostsService } from './types'
 
 export const postsService: PostsService = {
   getAllPosts: (_call, callback) => {
-    callback(null, { posts: posts })
+    const { error, response } = handleAllPosts()
+
+    callback(error, response)
   },
-  getPosts: (_call, callback) => {
-    // console.log(_)
-    const [postsItem] = posts.filter(({ id }) => id === '1')
-    callback(null, postsItem)
+  getPosts: (call, callback) => {
+    const { error, response } = handlePosts(call)
+
+    callback(error, response)
   },
   deletePosts: (call, callback) => {
-    const postsId = call.request.id
-    posts = posts.filter(({ id }) => id !== postsId)
-    callback(null, {})
+    const { error, response } = handleDeletePosts(call)
+
+    callback(error, response)
   },
   editPosts: (call, callback) => {
-    const postsId = call.request.id
-    const postsItem = posts.find(({ id }) => postsId === id)
-    if (postsItem !== undefined) {
-      postsItem.body = call.request.body
-      postsItem.category = call.request.postImage
-      postsItem.title = call.request.title
-    }
+    const { error, response } = handleEditPosts(call)
 
-    callback(null, postsItem ?? {})
+    callback(error, response)
   },
   addPosts: (call, callback) => {
-    const _posts = { id: Date.now(), ...call.request }
-    posts.push(_posts)
-    callback(null, _posts)
+    const { error, response } = handleAddPosts(call)
+
+    callback(error, response)
   }
 }

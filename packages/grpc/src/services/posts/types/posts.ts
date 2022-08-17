@@ -1,6 +1,6 @@
 export interface Posts {
   /** Posts id */
-  id?: (string|null)
+  id?: (number|null)
 
   /** Posts title */
   title?: (string|null)

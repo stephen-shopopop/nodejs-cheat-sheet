@@ -3,7 +3,7 @@ import protoLoader, { loadSync } from '@grpc/proto-loader'
 import { postsService } from './services/posts'
 import { ServerPackage } from './types'
 
-const PROTO_PATH = './proto/posts.proto'
+const PROTO_PATH = './proto/blog.proto'
 
 const options: protoLoader.Options = {
   keepCase: true,

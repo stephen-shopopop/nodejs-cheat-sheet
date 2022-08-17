@@ -1,7 +1,13 @@
 import { UntypedServiceImplementation } from '@grpc/grpc-js'
 import { Posts } from './posts'
 
-/** Handle Callback */
+/** Handle */
+export interface Handle<T> {
+  error: Error | null
+  response: T
+}
+
+/** Callback */
 export type CallBack<T> = (error: (Error|null), response?: T) => void
 
 export interface PostsList {
