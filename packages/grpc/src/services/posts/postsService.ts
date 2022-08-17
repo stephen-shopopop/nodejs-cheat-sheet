@@ -9,7 +9,7 @@ let posts: Posts[] = [
 ]
 
 export const postsService: PostsService = {
-  getAllPosts: (_call, callback): void => {
+  getAllPosts: (_call, callback) => {
     callback(null, { posts: posts })
   },
   getPosts: (_call, callback) => {
@@ -17,7 +17,7 @@ export const postsService: PostsService = {
     const [postsItem] = posts.filter(({ id }) => id === '1')
     callback(null, postsItem)
   },
-  deletePosts: (call, callback): void => {
+  deletePosts: (call, callback) => {
     const postsId = call.request.id
     posts = posts.filter(({ id }) => id !== postsId)
     callback(null, {})
@@ -33,7 +33,7 @@ export const postsService: PostsService = {
 
     callback(null, postsItem ?? {})
   },
-  addPosts: (call, callback): void => {
+  addPosts: (call, callback) => {
     const _posts = { id: Date.now(), ...call.request }
     posts.push(_posts)
     callback(null, _posts)
