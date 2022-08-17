@@ -21,7 +21,7 @@ Grpc server exercice
 
 ### Libraries:
 
-- [grpc node](https://github.com/grpc-prj/grpc-nodejs)
+- [grpc node](https://github.com/grpc/grpc-node)
 - [protobuf](https://github.com/protobufjs/protobuf.js)
 - [protobuffer to swagger](https://github.com/JennieJi/protobuf2swagger)
 
