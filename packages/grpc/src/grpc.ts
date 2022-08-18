@@ -14,9 +14,9 @@ const options: protoLoader.Options = {
 }
 
 const packageDefinition = loadSync(PROTO_PATH, options)
-const postsProto = loadPackageDefinition(packageDefinition) as ServerPackage
+export const blogProto = loadPackageDefinition(packageDefinition) as ServerPackage
 
 const server: Server = new Server()
-server.addService(postsProto.PostsService.service, postsService)
+server.addService(blogProto.PostsService.service, postsService)
 
 export default server

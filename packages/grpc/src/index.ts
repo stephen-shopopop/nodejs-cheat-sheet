@@ -1,8 +1,13 @@
-import { ServerCredentials } from '@grpc/grpc-js'
-import server from './grpc'
+import { credentials, ServerCredentials } from '@grpc/grpc-js'
+import server, { blogProto } from './grpc'
 
 /**
- * Start grpc server
+ * GRPC - Client
+ */
+export const client = new blogProto.PostsService('localhost:50051', credentials.createInsecure())
+
+/**
+ * GRPC - server
  */
 server.bindAsync(
   '127.0.0.1:50051',

@@ -1,0 +1,190 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "blog",
+    "description": "",
+    "version": "1"
+  },
+  "paths": {
+    "/PostsService/GetAllPosts": {
+      "post": {
+        "operationId": "PostsService.GetAllPosts",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostsList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PostsService/GetPosts": {
+      "post": {
+        "operationId": "PostsService.GetPosts",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PostsId"
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Posts"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PostsService/DeletePosts": {
+      "post": {
+        "operationId": "PostsService.DeletePosts",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PostsId"
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empty"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PostsService/EditPosts": {
+      "post": {
+        "operationId": "PostsService.EditPosts",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Posts"
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Posts"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PostsService/AddPosts": {
+      "post": {
+        "operationId": "PostsService.AddPosts",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Posts"
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Posts"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "requestBodies": {
+      "PostsId": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PostsId"
+            }
+          }
+        },
+        "required": true
+      },
+      "Posts": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Posts"
+            }
+          }
+        },
+        "required": true
+      }
+    },
+    "schemas": {
+      "Posts": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      },
+      "PostsId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PostsList": {
+        "type": "object",
+        "properties": {
+          "posts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Posts"
+            }
+          }
+        }
+      },
+      "Empty": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

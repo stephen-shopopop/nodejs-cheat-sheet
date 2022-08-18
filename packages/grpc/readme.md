@@ -15,7 +15,7 @@ Grpc server exercice
 1. npm run start -  Start project
 2. npm run dev - Start project with ts-node (dev only)
 3. npm run compile - Build ts
-3. npm run proto - Generate types(ts) from .proto file
+4. npm run proto - Generate types(ts) from .proto file
 
 ## Documentations
 
