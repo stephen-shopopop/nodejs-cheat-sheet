@@ -47,7 +47,7 @@ export function handleEditPosts (postsEdit: Posts): Handle<Posts | {}> {
 }
 
 export function handleAddPosts (postsNew: Posts): Handle<Posts> {
-  const postsItem = { ...postsNew, id: Date.now() }
+  const postsItem = { ...postsNew, id: (Date.now() / 1000) }
   posts.push(postsItem)
 
   return {

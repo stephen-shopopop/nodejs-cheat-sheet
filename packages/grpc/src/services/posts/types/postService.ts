@@ -1,3 +1,4 @@
+import { ServiceClient } from 'packages/grpc/src/types'
 import { sendUnaryData, ServerErrorResponse, ServerUnaryCall, UntypedServiceImplementation } from '../../../deps'
 
 export interface Posts {
@@ -44,4 +45,22 @@ export interface PostsService extends UntypedServiceImplementation {
 
   /** Implementation  addPosts */
   addPosts: (call: ServerUnaryCall<Posts, Posts>, callback: sendUnaryData<Posts>) => void
+}
+
+export interface PostsServiceClient extends ServiceClient {
+  /** Method  getAllPosts */
+  getAllPosts: (request: {}, callback: sendUnaryData<PostsList>) => void
+
+  /** Method  getPosts */
+  getPosts: (request: PostsId, callback: sendUnaryData<Posts>) => void
+
+  /** Method  deletePosts */
+  deletePosts: (request: PostsId, callback: sendUnaryData<{}>) => void
+
+  /** Method  editPosts */
+  editPosts: (request: Posts, callback: sendUnaryData<Posts>) => void
+
+  /** Method  addPosts */
+  addPosts: (request: Posts, callback: sendUnaryData<Posts>) => void
+
 }

@@ -1,14 +1,14 @@
 syntax = "proto3";
 
 message Posts {
-  int64 id = 1;
+  int32 id = 1;
   string title = 2;
   string body = 3;
   string category = 4;
 }
 
 message PostsId {
-  int64 id = 1;
+  int32 id = 1;
 }
 
 message PostsList {
