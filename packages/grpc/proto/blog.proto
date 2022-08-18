@@ -1,14 +1,14 @@
 syntax = "proto3";
 
 message Posts {
-  int32 id = 1;
+  int64 id = 1;
   string title = 2;
   string body = 3;
   string category = 4;
 }
 
 message PostsId {
-  int32 id = 1;
+  int64 id = 1;
 }
 
 message PostsList {
@@ -21,7 +21,7 @@ service PostsService {
   rpc GetAllPosts (Empty) returns (PostsList) {}
   rpc GetPosts (PostsId) returns (Posts) {}
   rpc DeletePosts (PostsId) returns (Empty) {}
-  rpc EditPosts (PostsId) returns (Posts) {}
+  rpc EditPosts (Posts) returns (Posts) {}
   rpc AddPosts (Posts) returns (Posts) {}
 }
 

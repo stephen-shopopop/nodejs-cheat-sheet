@@ -1,3 +1,4 @@
+import { status } from '@grpc/grpc-js'
 import { Handle, Posts, PostsList } from './types'
 
 let posts: Posts[] = [
@@ -12,17 +13,16 @@ export function handleAllPosts (): Handle<PostsList> {
   }
 }
 
-export function handlePosts (call: any): Handle<Posts> {
-  const [postsItem] = posts.filter(({ id }) => id === call.request.id)
+export function handlePosts (postsId: number): Handle<Posts> {
+  const [postsItem] = posts.filter(({ id }) => id === postsId)
 
   return {
-    error: null,
+    error: postsItem !== undefined ? null : { name: 'postsError', message: 'posts id not found', code: status.NOT_FOUND },
     response: postsItem
   }
 }
 
-export function handleDeletePosts (call: any): Handle<{}> {
-  const postsId = call.request.id
+export function handleDeletePosts (postsId: number): Handle<{}> {
   posts = posts.filter(({ id }) => id !== postsId)
 
   return {
@@ -31,24 +31,23 @@ export function handleDeletePosts (call: any): Handle<{}> {
   }
 }
 
-export function handleEditPosts (call: any): Handle<Posts | {}> {
-  const postsId = call.request.id
-  const postsItem = posts.find(({ id }) => postsId === id)
+export function handleEditPosts (postsEdit: Posts): Handle<Posts | {}> {
+  const postsItem = posts.find(({ id }) => id === postsEdit.id)
 
   if (postsItem !== undefined) {
-    postsItem.body = call.request.body
-    postsItem.category = call.request.postImage
-    postsItem.title = call.request.title
+    postsItem.body = postsEdit.body
+    postsItem.category = postsEdit.category
+    postsItem.title = postsEdit.title
   }
 
   return {
-    error: null,
+    error: postsItem !== undefined ? null : { name: 'postsError', message: 'posts id not found', code: status.NOT_FOUND },
     response: postsItem ?? {}
   }
 }
 
-export function handleAddPosts (call: any): Handle<Posts> {
-  const postsItem = { id: Date.now(), ...call.request }
+export function handleAddPosts (postsNew: Posts): Handle<Posts> {
+  const postsItem = { ...postsNew, id: Date.now() }
   posts.push(postsItem)
 
   return {

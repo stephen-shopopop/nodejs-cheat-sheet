@@ -11,3 +11,7 @@ export interface Posts {
   /** Posts category */
   category?: (string|null)
 }
+
+export interface PostsId {
+  id: number
+}

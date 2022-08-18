@@ -1,14 +1,14 @@
-import { UntypedServiceImplementation } from '@grpc/grpc-js'
-import { Posts } from './posts'
+import { sendUnaryData, ServerErrorResponse, ServerUnaryCall, UntypedServiceImplementation } from '@grpc/grpc-js'
+import { Posts, PostsId } from './posts'
 
 /** Handle */
 export interface Handle<T> {
-  error: Error | null
+  error: ServerErrorResponse | null
   response: T
 }
 
 /** Callback */
-export type CallBack<T> = (error: (Error|null), response?: T) => void
+export type CallBack<T> = sendUnaryData<T> // (error: (ServerErrorResponse | null), response?: T) => void
 
 export interface PostsList {
   /** Posts list */
@@ -17,17 +17,17 @@ export interface PostsList {
 
 export interface PostsService extends UntypedServiceImplementation {
   /** Implementation  getAllPosts */
-  getAllPosts: (call: any, callback: CallBack<PostsList>) => void
+  getAllPosts: (call: ServerUnaryCall<{}, PostsList>, callback: CallBack<PostsList>) => void
 
   /** Implementation  getPosts */
-  getPosts: (call: any, callback: CallBack<Posts>) => void
+  getPosts: (call: ServerUnaryCall<PostsId, Posts>, callback: CallBack<Posts>) => void
 
   /** Implementation  deletePosts */
-  deletePosts: (call: any, callback: CallBack<{}>) => void
+  deletePosts: (call: ServerUnaryCall<PostsId, {}>, callback: CallBack<{}>) => void
 
   /** Implementation  editPosts */
-  editPosts: (call: any, callback: CallBack<Posts>) => void
+  editPosts: (call: ServerUnaryCall<Posts, Posts>, callback: CallBack<Posts>) => void
 
   /** Implementation  addPosts */
-  addPosts: (call: any, callback: CallBack<Posts>) => void
+  addPosts: (call: ServerUnaryCall<Posts, Posts>, callback: CallBack<Posts>) => void
 }

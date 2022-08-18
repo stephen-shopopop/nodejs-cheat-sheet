@@ -8,22 +8,22 @@ export const postsService: PostsService = {
     callback(error, response)
   },
   getPosts: (call, callback) => {
-    const { error, response } = handlePosts(call)
+    const { error, response } = handlePosts(call.request.id)
 
     callback(error, response)
   },
   deletePosts: (call, callback) => {
-    const { error, response } = handleDeletePosts(call)
+    const { error, response } = handleDeletePosts(call.request.id)
 
     callback(error, response)
   },
   editPosts: (call, callback) => {
-    const { error, response } = handleEditPosts(call)
+    const { error, response } = handleEditPosts(call.request)
 
     callback(error, response)
   },
   addPosts: (call, callback) => {
-    const { error, response } = handleAddPosts(call)
+    const { error, response } = handleAddPosts(call.request)
 
     callback(error, response)
   }
