@@ -1,5 +1,4 @@
-import { loadPackageDefinition, Server } from '@grpc/grpc-js'
-import protoLoader, { loadSync } from '@grpc/proto-loader'
+import { loadPackageDefinition, loadSync, protoLoader, Server } from './deps'
 import { postsService } from './services/posts'
 import { ServerPackage } from './types'
 

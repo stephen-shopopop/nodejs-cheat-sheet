@@ -1,5 +1,27 @@
-import { sendUnaryData, ServerErrorResponse, ServerUnaryCall, UntypedServiceImplementation } from '@grpc/grpc-js'
-import { Posts, PostsId } from './posts'
+import { sendUnaryData, ServerErrorResponse, ServerUnaryCall, UntypedServiceImplementation } from '../../../deps'
+
+export interface Posts {
+  /** Posts id */
+  id?: (number|null)
+
+  /** Posts title */
+  title?: (string|null)
+
+  /** Posts body */
+  body?: (string|null)
+
+  /** Posts category */
+  category?: (string|null)
+}
+
+export interface PostsId {
+  id: number
+}
+
+export interface PostsList {
+  /** Posts list */
+  posts: Posts[]
+}
 
 /** Handle */
 export interface Handle<T> {
@@ -7,27 +29,19 @@ export interface Handle<T> {
   response?: T
 }
 
-/** Callback */
-export type CallBack<T> = sendUnaryData<T> // (error: (ServerErrorResponse | null), response?: T) => void
-
-export interface PostsList {
-  /** Posts list */
-  posts: Posts[]
-}
-
 export interface PostsService extends UntypedServiceImplementation {
   /** Implementation  getAllPosts */
-  getAllPosts: (call: ServerUnaryCall<{}, PostsList>, callback: CallBack<PostsList>) => void
+  getAllPosts: (call: ServerUnaryCall<{}, PostsList>, callback: sendUnaryData<PostsList>) => void
 
   /** Implementation  getPosts */
-  getPosts: (call: ServerUnaryCall<PostsId, Posts>, callback: CallBack<Posts>) => void
+  getPosts: (call: ServerUnaryCall<PostsId, Posts>, callback: sendUnaryData<Posts>) => void
 
   /** Implementation  deletePosts */
-  deletePosts: (call: ServerUnaryCall<PostsId, {}>, callback: CallBack<{}>) => void
+  deletePosts: (call: ServerUnaryCall<PostsId, {}>, callback: sendUnaryData<{}>) => void
 
   /** Implementation  editPosts */
-  editPosts: (call: ServerUnaryCall<Posts, Posts>, callback: CallBack<Posts>) => void
+  editPosts: (call: ServerUnaryCall<Posts, Posts>, callback: sendUnaryData<Posts>) => void
 
   /** Implementation  addPosts */
-  addPosts: (call: ServerUnaryCall<Posts, Posts>, callback: CallBack<Posts>) => void
+  addPosts: (call: ServerUnaryCall<Posts, Posts>, callback: sendUnaryData<Posts>) => void
 }

@@ -1,4 +1,4 @@
-import { credentials, ServerCredentials } from '@grpc/grpc-js'
+import { credentials, ServerCredentials } from './deps'
 import server, { blogProto } from './grpc'
 
 /**

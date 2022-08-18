@@ -1,4 +1,4 @@
-import { status } from '@grpc/grpc-js'
+import { status } from '../../deps'
 import { Handle, Posts, PostsList } from './types'
 
 let posts: Posts[] = [
