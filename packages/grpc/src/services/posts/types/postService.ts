@@ -4,7 +4,7 @@ import { Posts, PostsId } from './posts'
 /** Handle */
 export interface Handle<T> {
   error: ServerErrorResponse | null
-  response: T
+  response?: T
 }
 
 /** Callback */
