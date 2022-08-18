@@ -1,5 +1,5 @@
 import { status } from '../../deps'
-import { Handle, Posts, PostsList } from './types'
+import { Handle, Posts, PostsId, PostsList } from './types'
 
 let posts: Posts[] = [
   { id: 1, title: 'My first post', body: 'lorem ipsum', category: 'tag' },
@@ -13,7 +13,7 @@ export function handleAllPosts (): Handle<PostsList> {
   }
 }
 
-export function handlePosts (postsId: number): Handle<Posts> {
+export function handlePosts (postsId: PostsId['id']): Handle<Posts> {
   const [postsItem] = posts.filter(({ id }) => id === postsId)
 
   return {
@@ -22,7 +22,7 @@ export function handlePosts (postsId: number): Handle<Posts> {
   }
 }
 
-export function handleDeletePosts (postsId: number): Handle<{}> {
+export function handleDeletePosts (postsId: PostsId['id']): Handle<{}> {
   posts = posts.filter(({ id }) => id !== postsId)
 
   return {
