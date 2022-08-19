@@ -43,6 +43,6 @@ export async function handleEditPosts (request: FastifyRequest, _reply: FastifyR
 }
 
 /** Create post */
-export async function handleAddPosts (request: FastifyRequest, _reply: FastifyReply): Promise<{} | undefined | null> {
+export async function handleAddPosts (request: FastifyRequest, reply: FastifyReply): Promise<Posts | null | undefined> {
   return await addPostsClient(request.body as Posts)
 }
