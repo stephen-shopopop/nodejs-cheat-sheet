@@ -17,7 +17,7 @@ export function handlePosts (postsId: PostsId['id']): Handle<Posts> {
   const [postsItem] = posts.filter(({ id }) => id === postsId)
 
   return {
-    error: postsItem !== undefined ? null : { name: 'postsError', message: 'posts id not found', code: status.NOT_FOUND },
+    error: postsItem !== undefined ? null : { name: 'postsError', message: 'posts not found', code: status.NOT_FOUND },
     response: postsItem
   }
 }
@@ -41,7 +41,7 @@ export function handleEditPosts (postsEdit: Posts): Handle<Posts | {}> {
   }
 
   return {
-    error: postsItem !== undefined ? null : { name: 'postsError', message: 'posts id not found', code: status.NOT_FOUND },
+    error: postsItem !== undefined ? null : { name: 'postsError', message: 'posts not found', code: status.NOT_FOUND },
     response: postsItem ?? {}
   }
 }

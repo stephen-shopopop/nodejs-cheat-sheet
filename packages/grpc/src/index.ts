@@ -1,5 +1,6 @@
 import { credentials, ServerCredentials } from './deps'
 import server, { blogProto } from './grpc'
+import serverRest from './http'
 import { PostsServiceClient } from './services/posts/types'
 
 /**
@@ -15,19 +16,25 @@ server.bindAsync(
   ServerCredentials.createInsecure(),
   (error: (Error | null), port: number) => {
     if (error !== null) {
-      console.error(`Server error: ${error.message}`)
+      console.error(`Server grpc error: ${error.message}`)
+      process.exit(1)
     } else {
-      console.log(`Server running at http://127.0.0.1:${port}`)
-      server.start()
+      console.log(`Server grpc running at http://127.0.0.1:${port}`)
 
-      // Client test
-      // client.getAllPosts({}, console.log)
-      // client.deletePosts({ id: 1 }, console.log)
-      // client.getPosts({ id: 2 }, console.log)
-      // client.editPosts({ id: 2, body: 'hello' }, console.log)
-      // client.addPosts({ body: 'oups' }, (_error, value) => {
-      //   console.log(value?.id)
-      // })
+      server.start()
     }
+  }
+)
+
+/**
+ * server http
+ */
+serverRest.listen({ port: 8080 },
+  (error: (Error | null), address: string) => {
+    if (error !== null) {
+      console.error(`Server http error: ${error.message}`)
+      process.exit(1)
+    }
+    console.log(`Server http listening at ${address}`)
   }
 )
