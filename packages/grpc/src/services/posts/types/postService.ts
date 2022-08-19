@@ -1,5 +1,5 @@
-import { ServiceClient } from 'packages/grpc/src/types'
 import { sendUnaryData, ServerErrorResponse, ServerUnaryCall, UntypedServiceImplementation } from '../../../deps'
+import { ServiceClient } from '../../../types'
 
 export interface Posts {
   /** Posts id */

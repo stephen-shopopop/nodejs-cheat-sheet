@@ -26,6 +26,7 @@
     "start:cluster": "npm run start -w=@stephen-shopopop/multithread-cluster",
     "start:fork": "npm run start -w=@stephen-shopopop/multithread-fork",
     "start:worker": "npm run start -w=@stephen-shopopop/multithread-worker",
+    "start:grpc": "npm run start -w=@stephen-shopopop/grpc",
     "build": "npm run compile -ws",
     "prepare": "npm run build",
     "test": "jest --reporters=default",

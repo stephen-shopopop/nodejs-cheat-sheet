@@ -21,13 +21,13 @@ server.bindAsync(
       server.start()
 
       // Client test
-      client.getAllPosts({}, console.log)
-      client.deletePosts({ id: 1 }, console.log)
-      client.getPosts({ id: 2 }, console.log)
-      client.editPosts({ id: 2, body: 'hello' }, console.log)
-      client.addPosts({ body: 'oups' }, (_error, value) => {
-        console.log(value?.id)
-      })
+      // client.getAllPosts({}, console.log)
+      // client.deletePosts({ id: 1 }, console.log)
+      // client.getPosts({ id: 2 }, console.log)
+      // client.editPosts({ id: 2, body: 'hello' }, console.log)
+      // client.addPosts({ body: 'oups' }, (_error, value) => {
+      //   console.log(value?.id)
+      // })
     }
   }
 )
