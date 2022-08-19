@@ -1,43 +1,35 @@
-import { fastify, FastifyReply, FastifyRequest, ServerErrorResponse, status } from './deps'
-import { getAllPostsClient, getPostsClient } from './services/posts/postsClient'
-import { PostsId } from './services/posts/types'
+import { fastify } from './deps'
+import { handleAddPosts, handleAllPosts, handleDeletePosts, handleEditPosts, handleError, handleGetPosts } from './services/posts/postsController'
+import { Posts, PostsId } from './services/posts/types'
 
-const serverRest = fastify()
-
-/** WIP */
-const STATUS_HTTP: Readonly<Record<number, number>> = {
-  [status.OK]: 200,
-  [status.NOT_FOUND]: 404
-  // ...
-}
-
-serverRest.get('/posts', async (_request: FastifyRequest, reply: FastifyReply) => {
-  try {
-    const posts = await getAllPostsClient({})
-    return posts?.posts
-  } catch (error: unknown) {
-    const err = error as ServerErrorResponse
-
-    await reply
-      .code(STATUS_HTTP[err.code ?? status.INTERNAL])
-      .send({ message: err.details })
+const serverRest = fastify({
+  logger: {
+    level: process.env.NODE_ENV === 'production'
+      ? 'fatal'
+      : 'debug'
   }
 })
 
-serverRest.get<{
-  Params: PostsId
-}>('/posts/:id', async (request, reply: FastifyReply) => {
-  try {
-    const { id } = request.params
+/** Hook handleError */
+serverRest.addHook('onError', handleError)
 
-    return await getPostsClient({ id })
-  } catch (error: unknown) {
-    const err = error as ServerErrorResponse
+/**
+ * Routes http
+ */
 
-    await reply
-      .code(STATUS_HTTP[err.code ?? status.INTERNAL])
-      .send({ message: err.details })
-  }
-})
+/** Get All posts */
+serverRest.get<{ Params: {} }>('/posts', handleAllPosts)
+
+/** Get post by id */
+serverRest.get<{ Params: PostsId }>('/posts/:id', handleGetPosts)
+
+/** Delete post */
+serverRest.delete<{ Params: PostsId }>('/posts/:id', handleDeletePosts)
+
+/** Edit post */
+serverRest.put<{ Params: PostsId, Body: Posts }>('/posts/:id', handleEditPosts)
+
+/** Create Post */
+serverRest.post<{ Body: Posts }>('/posts', handleAddPosts)
 
 export default serverRest

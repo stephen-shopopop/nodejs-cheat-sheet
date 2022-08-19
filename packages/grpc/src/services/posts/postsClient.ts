@@ -39,7 +39,7 @@ export async function editPostsClient (request: Posts): Promise<Posts | null | u
   })
 }
 
-export async function assPostsClient (request: Posts): Promise<Posts | null | undefined> {
+export async function addPostsClient (request: Posts): Promise<Posts | null | undefined> {
   return await new Promise((resolve, reject) => {
     client.addPosts(
       request,
