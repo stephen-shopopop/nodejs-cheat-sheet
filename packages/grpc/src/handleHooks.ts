@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest, ServerErrorResponse, status } from '../deps'
+import { FastifyReply, FastifyRequest, ServerErrorResponse, status } from './deps'
 import { Status, STATUS_HTTP } from './http_status'
 
 /** HandleError */
