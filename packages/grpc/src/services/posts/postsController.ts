@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest, ServerErrorResponse, status } from '../../deps'
-import { STATUS_HTTP } from '../../http_status'
+import { Status, STATUS_HTTP } from '../../http_status'
 import { addPostsClient, deletePostsClient, editPostsClient, getAllPostsClient, getPostsClient } from './postsClient'
 import { Posts, PostsId } from './types'
 
@@ -11,6 +11,14 @@ export async function handleError (_request: FastifyRequest, reply: FastifyReply
     await reply
       .code(STATUS_HTTP[err.code ?? status.INTERNAL])
       .send()
+  }
+}
+
+/** HandleSend */
+export async function handleSend (request: FastifyRequest, reply: any): Promise<void> {
+  if (request.method === 'POST') {
+    // Don't use await
+    reply.code(Status.Created)
   }
 }
 

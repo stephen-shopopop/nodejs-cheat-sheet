@@ -1,5 +1,5 @@
 import { fastify } from './deps'
-import { handleAddPosts, handleAllPosts, handleDeletePosts, handleEditPosts, handleError, handleGetPosts } from './services/posts/postsController'
+import { handleAddPosts, handleAllPosts, handleDeletePosts, handleEditPosts, handleError, handleGetPosts, handleSend } from './services/posts/postsController'
 import { Posts, PostsId } from './services/posts/types'
 
 const serverRest = fastify({
@@ -12,6 +12,9 @@ const serverRest = fastify({
 
 /** Hook handleError */
 serverRest.addHook('onError', handleError)
+
+/** Hook handle before onSend */
+serverRest.addHook('onSend', handleSend)
 
 /**
  * Routes http
