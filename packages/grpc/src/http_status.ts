@@ -200,20 +200,20 @@ export const STATUS_TEXT: Readonly<Record<Status, string>> = {
 
 export const STATUS_HTTP: Readonly<Record<number, number>> = {
   [status.OK]: Status.OK,
-  [status.CANCELLED]: Status.Forbidden,
+  [status.CANCELLED]: Status.RequestTimeout,
   [status.UNKNOWN]: Status.InternalServerError,
   [status.INVALID_ARGUMENT]: Status.BadRequest,
   [status.DEADLINE_EXCEEDED]: Status.GatewayTimeout,
   [status.NOT_FOUND]: Status.NotFound,
   [status.ALREADY_EXISTS]: Status.Conflict,
-  [status.PERMISSION_DENIED]: Status.Unauthorized,
-  [status.RESOURCE_EXHAUSTED]: Status.InternalServerError,
+  [status.PERMISSION_DENIED]: Status.Forbidden,
+  [status.RESOURCE_EXHAUSTED]: Status.TooManyRequests,
   [status.FAILED_PRECONDITION]: Status.PreconditionFailed,
-  [status.ABORTED]: Status.ServiceUnavailable,
+  [status.ABORTED]: Status.Conflict,
   [status.OUT_OF_RANGE]: Status.BadRequest,
   [status.UNIMPLEMENTED]: Status.NotImplemented,
   [status.INTERNAL]: Status.InternalServerError,
   [status.UNAVAILABLE]: Status.ServiceUnavailable,
-  [status.DATA_LOSS]: Status.Conflict,
-  [status.UNAUTHENTICATED]: Status.Forbidden
+  [status.DATA_LOSS]: Status.InternalServerError,
+  [status.UNAUTHENTICATED]: Status.Unauthorized
 }
