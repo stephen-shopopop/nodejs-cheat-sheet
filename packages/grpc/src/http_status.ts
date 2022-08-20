@@ -199,6 +199,7 @@ export const STATUS_TEXT: Readonly<Record<Status, string>> = {
 }
 
 export const STATUS_HTTP: Readonly<Record<number, number>> = {
+  /** https://grpc.github.io/grpc/core/md_doc_statuscodes.html */
   [status.OK]: Status.OK,
   [status.CANCELLED]: Status.RequestTimeout,
   [status.UNKNOWN]: Status.InternalServerError,
