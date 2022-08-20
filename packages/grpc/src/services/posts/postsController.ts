@@ -1,26 +1,6 @@
-import { FastifyReply, FastifyRequest, ServerErrorResponse, status } from '../../deps'
-import { Status, STATUS_HTTP } from '../../http_status'
+import { FastifyReply, FastifyRequest } from '../../deps'
 import { addPostsClient, deletePostsClient, editPostsClient, getAllPostsClient, getPostsClient } from './postsClient'
 import { Posts, PostsId } from './types'
-
-/** HandleError */
-export async function handleError (_request: FastifyRequest, reply: FastifyReply, error: Error): Promise<void> {
-  const err = error as ServerErrorResponse
-
-  if (err.code !== undefined) {
-    await reply
-      .code(STATUS_HTTP[err.code ?? status.INTERNAL])
-      .send()
-  }
-}
-
-/** HandleSend */
-export async function handleSend (request: FastifyRequest, reply: any): Promise<void> {
-  if (request.method === 'POST') {
-    // Don't use await
-    reply.code(Status.Created)
-  }
-}
 
 /** Get all posts */
 export async function handleAllPosts (_request: FastifyRequest, _reply: FastifyReply): Promise<Posts[] | undefined> {
