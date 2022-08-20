@@ -1,5 +1,6 @@
 import { fastify } from './deps'
-import { handleAddPosts, handleAllPosts, handleDeletePosts, handleEditPosts, handleError, handleGetPosts, handleSend } from './services/posts/postsController'
+import { handleAddPosts, handleAllPosts, handleDeletePosts, handleEditPosts, handleGetPosts } from './services/posts/postsController'
+import { handleError, handleSend } from './handleHooks'
 import { Posts, PostsId } from './services/posts/types'
 
 const serverRest = fastify({
