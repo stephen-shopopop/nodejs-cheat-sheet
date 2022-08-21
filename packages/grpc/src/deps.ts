@@ -24,6 +24,8 @@ import protoLoader, { loadSync } from '@grpc/proto-loader'
 
 import fastify, { FastifyReply, FastifyRequest } from 'fastify'
 
+import { z } from 'zod'
+
 export {
   loadPackageDefinition,
   Server,
@@ -42,5 +44,6 @@ export {
   status,
   fastify,
   FastifyReply,
-  FastifyRequest
+  FastifyRequest,
+  z
 }

@@ -25,6 +25,7 @@ Grpc server exercice
 - [grpc documentation](https://grpc.github.io/grpc/node/grpc.html)
 - [protobuf](https://github.com/protobufjs/protobuf.js)
 - [protobuffer to swagger](https://github.com/JennieJi/protobuf2swagger)
+- [zod](https://zod.dev)
 
 ### Reference:
 
