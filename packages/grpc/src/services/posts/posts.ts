@@ -1,20 +1,19 @@
+import { sqlite } from '../../dal/sqlite'
 import { status, z } from '../../deps'
 import { Status, STATUS_TEXT } from '../../http_status'
 import { Handle, Posts, PostsId, PostsList } from './types'
 
-let posts: Posts[] = [
-  { id: 1, title: 'My first post', body: 'lorem ipsum', category: 'tag' },
-  { id: 2, title: 'My second post', body: 'lorem ipsum', category: 'car' }
-]
+export async function handleAllPosts (): Promise<Handle<PostsList>> {
+  const posts = await sqlite('Posts')
+    .select()
 
-export function handleAllPosts (): Handle<PostsList> {
   return {
     error: null,
     response: { posts }
   }
 }
 
-export function handlePosts (postsId: PostsId['id']): Handle<Posts> {
+export async function handlePosts (postsId: PostsId['id']): Promise<Handle<Posts>> {
   /** Validate id */
   if (postsId <= 0) {
     return {
@@ -22,7 +21,9 @@ export function handlePosts (postsId: PostsId['id']): Handle<Posts> {
     }
   }
 
-  const [postsItem] = posts.filter(({ id }) => id === postsId)
+  const [postsItem] = await sqlite('Posts')
+    .select()
+    .where('id', postsId)
 
   return {
     error: postsItem !== undefined ? null : { name: 'postsError', message: STATUS_TEXT[Status.NotFound], code: status.NOT_FOUND },
@@ -30,7 +31,7 @@ export function handlePosts (postsId: PostsId['id']): Handle<Posts> {
   }
 }
 
-export function handleDeletePosts (postsId: PostsId['id']): Handle<{}> {
+export async function handleDeletePosts (postsId: PostsId['id']): Promise<Handle<{}>> {
   /** Validate id */
   if (postsId <= 0) {
     return {
@@ -38,7 +39,10 @@ export function handleDeletePosts (postsId: PostsId['id']): Handle<{}> {
     }
   }
 
-  posts = posts.filter(({ id }) => id !== postsId)
+  /** sqlite delete post */
+  await sqlite('Posts')
+    .where('id', postsId)
+    .del()
 
   return {
     error: null,
@@ -46,7 +50,7 @@ export function handleDeletePosts (postsId: PostsId['id']): Handle<{}> {
   }
 }
 
-export function handleEditPosts (postsEdit: Posts): Handle<Posts | {}> {
+export async function handleEditPosts (postsEdit: Posts): Promise<Handle<Posts | {}>> {
   const schema = z
     .object({
       id: z.number().positive(),
@@ -62,12 +66,20 @@ export function handleEditPosts (postsEdit: Posts): Handle<Posts | {}> {
     }
   }
 
-  const postsItem = posts.find(({ id }) => id === schema.data.id)
+  /** sqlite get post by id */
+  const [postsItem] = await sqlite('Posts')
+    .select()
+    .where('id', schema.data.id)
 
   if (postsItem !== undefined) {
-    postsItem.body = schema.data.body
-    postsItem.category = schema.data.category
-    postsItem.title = schema.data.title
+    /** sqlite update */
+    await sqlite('Posts')
+      .where('id', schema.data.id)
+      .update({
+        title: schema.data.title,
+        body: schema.data.body,
+        category: schema.data.category
+      })
   }
 
   return {
@@ -76,7 +88,7 @@ export function handleEditPosts (postsEdit: Posts): Handle<Posts | {}> {
   }
 }
 
-export function handleAddPosts (postsNew: Posts): Handle<Posts> {
+export async function handleAddPosts (postsNew: Posts): Promise<Handle<Posts>> {
   const schema = z
     .object({
       title: z.string().min(5, { message: 'title must be 5 or more characters long' }),
@@ -91,8 +103,13 @@ export function handleAddPosts (postsNew: Posts): Handle<Posts> {
     }
   }
 
-  const postsItem = { ...schema.data, id: (Date.now() / 1000) }
-  posts.push(postsItem)
+  /** sqlite insert */
+  const [count] = await sqlite('Posts')
+    .insert(schema.data)
+    .onConflict()
+    .ignore()
+
+  const postsItem = { ...schema.data, id: count }
 
   return {
     error: null,

@@ -1,7 +1,11 @@
+import { migrate, sqlite } from './dal/sqlite'
 import { credentials, ServerCredentials } from './deps'
 import server, { blogProto } from './grpc'
 import serverRest from './http'
 import { PostsServiceClient } from './services/posts/types'
+
+/** sqlite migration */
+migrate(sqlite).catch(() => process.exit(1))
 
 /**
  * GRPC - Client

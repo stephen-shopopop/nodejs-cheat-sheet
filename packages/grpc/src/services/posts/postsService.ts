@@ -2,28 +2,28 @@ import { handleAddPosts, handleAllPosts, handleDeletePosts, handleEditPosts, han
 import { PostsService } from './types'
 
 export const postsService: PostsService = {
-  getAllPosts: (_call, callback) => {
-    const { error, response } = handleAllPosts()
+  getAllPosts: async (_call, callback) => {
+    const { error, response } = await handleAllPosts()
 
     callback(error, response)
   },
-  getPosts: (call, callback) => {
-    const { error, response } = handlePosts(call.request.id)
+  getPosts: async (call, callback) => {
+    const { error, response } = await handlePosts(call.request.id)
 
     callback(error, response)
   },
-  deletePosts: (call, callback) => {
-    const { error, response } = handleDeletePosts(call.request.id)
+  deletePosts: async (call, callback) => {
+    const { error, response } = await handleDeletePosts(call.request.id)
 
     callback(error, response)
   },
-  editPosts: (call, callback) => {
-    const { error, response } = handleEditPosts(call.request)
+  editPosts: async (call, callback) => {
+    const { error, response } = await handleEditPosts(call.request)
 
     callback(error, response)
   },
-  addPosts: (call, callback) => {
-    const { error, response } = handleAddPosts(call.request)
+  addPosts: async (call, callback) => {
+    const { error, response } = await handleAddPosts(call.request)
 
     callback(error, response)
   }

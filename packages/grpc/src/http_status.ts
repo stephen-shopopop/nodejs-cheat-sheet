@@ -198,7 +198,7 @@ export const STATUS_TEXT: Readonly<Record<Status, string>> = {
   [Status.VariantAlsoNegotiates]: 'Variant Also Negotiates'
 }
 
-export const STATUS_HTTP: Readonly<Record<number, number>> = {
+export const STATUS_HTTP: Readonly<Record<status, number>> = {
   /** https://grpc.github.io/grpc/core/md_doc_statuscodes.html */
   [status.OK]: Status.OK,
   [status.CANCELLED]: Status.RequestTimeout,

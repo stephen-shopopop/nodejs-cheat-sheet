@@ -26,6 +26,8 @@ import fastify, { FastifyReply, FastifyRequest } from 'fastify'
 
 import { z } from 'zod'
 
+import knex, { Knex } from 'knex'
+
 export {
   loadPackageDefinition,
   Server,
@@ -45,5 +47,7 @@ export {
   fastify,
   FastifyReply,
   FastifyRequest,
-  z
+  z,
+  knex,
+  Knex
 }
