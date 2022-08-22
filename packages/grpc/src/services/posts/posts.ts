@@ -62,12 +62,12 @@ export function handleEditPosts (postsEdit: Posts): Handle<Posts | {}> {
     }
   }
 
-  const postsItem = posts.find(({ id }) => id === postsEdit.id)
+  const postsItem = posts.find(({ id }) => id === schema.data.id)
 
   if (postsItem !== undefined) {
-    postsItem.body = postsEdit.body
-    postsItem.category = postsEdit.category
-    postsItem.title = postsEdit.title
+    postsItem.body = schema.data.body
+    postsItem.category = schema.data.category
+    postsItem.title = schema.data.title
   }
 
   return {
@@ -91,7 +91,7 @@ export function handleAddPosts (postsNew: Posts): Handle<Posts> {
     }
   }
 
-  const postsItem = { ...postsNew, id: (Date.now() / 1000) }
+  const postsItem = { ...schema.data, id: (Date.now() / 1000) }
   posts.push(postsItem)
 
   return {
