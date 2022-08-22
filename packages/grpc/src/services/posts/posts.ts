@@ -21,6 +21,7 @@ export async function handlePosts (postsId: PostsId['id']): Promise<Handle<Posts
     }
   }
 
+  /** sqlite get post by id */
   const [postsItem] = await sqlite('Posts')
     .select()
     .where('id', postsId)
