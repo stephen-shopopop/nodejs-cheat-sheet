@@ -14,7 +14,7 @@ export async function handleError (_request: FastifyRequest, reply: FastifyReply
 
 /** HandleSend */
 export async function handleSend (request: FastifyRequest, reply: any): Promise<void> {
-  if (request.method === 'POST' && reply.statusCode === 200) {
+  if (request.method === 'POST' && reply.statusCode === Status.OK) {
     // Don't use await
     reply.code(Status.Created)
   }
