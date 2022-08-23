@@ -4,7 +4,7 @@ import { Status, STATUS_TEXT } from '../../http_status'
 import { Handle, Posts, PostsId, PostsList } from './types'
 
 export async function handleAllPosts (): Promise<Handle<PostsList>> {
-  const posts = await sqlite('Posts')
+  const posts = await sqlite<Posts>('Posts')
     .select()
 
   return {
@@ -22,12 +22,14 @@ export async function handlePosts (postsId: PostsId['id']): Promise<Handle<Posts
   }
 
   /** sqlite get post by id */
-  const [postsItem] = await sqlite('Posts')
+  const [postsItem] = await sqlite<Posts>('Posts')
     .select()
     .where('id', postsId)
 
   return {
-    error: postsItem !== undefined ? null : { name: 'postsError', message: STATUS_TEXT[Status.NotFound], code: status.NOT_FOUND },
+    error: postsItem !== undefined
+      ? null
+      : { name: 'postsError', message: STATUS_TEXT[Status.NotFound], code: status.NOT_FOUND },
     response: postsItem
   }
 }
@@ -67,25 +69,22 @@ export async function handleEditPosts (postsEdit: Posts): Promise<Handle<Posts |
     }
   }
 
-  /** sqlite get post by id */
-  const [postsItem] = await sqlite('Posts')
-    .select()
-    .where('id', schema.data.id)
-
-  if (postsItem !== undefined) {
-    /** sqlite update */
-    await sqlite('Posts')
+  /** sqlite update */
+  const updated: boolean = Boolean(
+    await sqlite<Posts>('Posts')
       .where('id', schema.data.id)
       .update({
         title: schema.data.title,
         body: schema.data.body,
         category: schema.data.category
       })
-  }
+  )
 
   return {
-    error: postsItem !== undefined ? null : { name: 'postsError', message: STATUS_TEXT[Status.NotFound], code: status.NOT_FOUND },
-    response: postsItem ?? {}
+    error: updated
+      ? null
+      : { name: 'postsError', message: STATUS_TEXT[Status.NotFound], code: status.NOT_FOUND },
+    response: updated ? schema.data : {}
   }
 }
 
@@ -105,12 +104,12 @@ export async function handleAddPosts (postsNew: Posts): Promise<Handle<Posts>> {
   }
 
   /** sqlite insert */
-  const [count] = await sqlite('Posts')
+  const [id] = await sqlite('Posts')
     .insert(schema.data)
     .onConflict()
     .ignore()
 
-  const postsItem = { ...schema.data, id: count }
+  const postsItem = { ...schema.data, id }
 
   return {
     error: null,

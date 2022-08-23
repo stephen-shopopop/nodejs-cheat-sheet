@@ -14,7 +14,7 @@ const question = util.promisify(rl.question).bind(rl)
 
 // eslint-disable-next-line no-extend-native
 String.prototype.toKebabCase = function () {
-  return this.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => '-' + chr).trim()
+  return this.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_m, chr) => '-' + chr).trim()
 }
 
 // main
