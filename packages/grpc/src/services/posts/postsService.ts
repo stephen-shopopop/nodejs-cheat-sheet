@@ -1,59 +1,51 @@
-import { ServerErrorResponse, status } from '../../deps'
+import { handleGrpcError } from '../../grpcError'
 import { handleAddPosts, handleAllPosts, handleDeletePosts, handleEditPosts, handlePosts } from './posts'
 import { PostsService } from './types'
-
-function handleError (error: unknown): ServerErrorResponse {
-  return {
-    name: 'postError',
-    message: error instanceof Error ? error.message : 'internal error',
-    code: status.INTERNAL
-  }
-}
 
 export const postsService: PostsService = {
   getAllPosts: async (_call, callback) => {
     try {
-      const { error, response } = await handleAllPosts()
+      const response = await handleAllPosts()
 
-      callback(error, response)
+      callback(null, response)
     } catch (error: unknown) {
-      callback(handleError(error))
+      callback(handleGrpcError(error))
     }
   },
   getPosts: async (call, callback) => {
     try {
-      const { error, response } = await handlePosts(call.request.id)
+      const response = await handlePosts(call.request.id)
 
-      callback(error, response)
+      callback(null, response)
     } catch (error: unknown) {
-      callback(handleError(error))
+      callback(handleGrpcError(error))
     }
   },
   deletePosts: async (call, callback) => {
     try {
-      const { error, response } = await handleDeletePosts(call.request.id)
+      const response = await handleDeletePosts(call.request.id)
 
-      callback(error, response)
+      callback(null, response)
     } catch (error: unknown) {
-      callback(handleError(error))
+      callback(handleGrpcError(error))
     }
   },
   editPosts: async (call, callback) => {
     try {
-      const { error, response } = await handleEditPosts(call.request)
+      const response = await handleEditPosts(call.request)
 
-      callback(error, response)
+      callback(null, response)
     } catch (error: unknown) {
-      callback(handleError(error))
+      callback(handleGrpcError(error))
     }
   },
   addPosts: async (call, callback) => {
     try {
-      const { error, response } = await handleAddPosts(call.request)
+      const response = await handleAddPosts(call.request)
 
-      callback(error, response)
+      callback(null, response)
     } catch (error: unknown) {
-      callback(handleError(error))
+      callback(handleGrpcError(error))
     }
   }
 }

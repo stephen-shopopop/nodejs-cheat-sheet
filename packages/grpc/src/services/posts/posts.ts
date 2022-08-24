@@ -1,59 +1,39 @@
-import { sqlite } from '../../dal/sqlite'
 import { status, z } from '../../deps'
+import { GrpcError } from '../../grpcError'
 import { Status, STATUS_TEXT } from '../../http_status'
-import { Handle, Posts, PostsId, PostsList } from './types'
+import { createPost, deletePosts, getAllPosts, getPosts, updatePosts } from './postsDAL'
+import { Posts, PostsId, PostsList } from './types'
 
-export async function handleAllPosts (): Promise<Handle<PostsList>> {
-  const posts = await sqlite<Posts>('Posts')
-    .select()
-
-  return {
-    error: null,
-    response: { posts }
-  }
+export async function handleAllPosts (): Promise<PostsList> {
+  return { posts: await getAllPosts() }
 }
 
-export async function handlePosts (postsId: PostsId['id']): Promise<Handle<Posts>> {
+export async function handlePosts (postsId: PostsId['id']): Promise<Posts> {
   /** Validate id */
   if (postsId <= 0) {
-    return {
-      error: { name: 'postsError', message: 'id must be greater than 0', code: status.INVALID_ARGUMENT }
-    }
+    throw new GrpcError('id must be greater than 0', status.INVALID_ARGUMENT)
   }
 
-  /** sqlite get post by id */
-  const [postsItem] = await sqlite<Posts>('Posts')
-    .select()
-    .where('id', postsId)
-
-  return {
-    error: postsItem !== undefined
-      ? null
-      : { name: 'postsError', message: STATUS_TEXT[Status.NotFound], code: status.NOT_FOUND },
-    response: postsItem
+  const postsItem = await getPosts(postsId)
+  if (postsItem === undefined) {
+    throw new GrpcError(STATUS_TEXT[Status.NotFound], status.NOT_FOUND)
   }
+
+  return postsItem
 }
 
-export async function handleDeletePosts (postsId: PostsId['id']): Promise<Handle<{}>> {
+export async function handleDeletePosts (postsId: PostsId['id']): Promise<{}> {
   /** Validate id */
   if (postsId <= 0) {
-    return {
-      error: { name: 'postsError', message: 'id must be greater than 0', code: status.INVALID_ARGUMENT }
-    }
+    throw new GrpcError('id must be > 0', status.INVALID_ARGUMENT)
   }
 
-  /** sqlite delete post */
-  await sqlite('Posts')
-    .where('id', postsId)
-    .del()
+  await deletePosts(postsId)
 
-  return {
-    error: null,
-    response: {}
-  }
+  return {}
 }
 
-export async function handleEditPosts (postsEdit: Posts): Promise<Handle<Posts | {}>> {
+export async function handleEditPosts (postsEdit: Posts): Promise<Posts> {
   const schema = z
     .object({
       id: z.number().positive(),
@@ -64,31 +44,18 @@ export async function handleEditPosts (postsEdit: Posts): Promise<Handle<Posts |
     .safeParse(postsEdit)
 
   if (!schema.success) {
-    return {
-      error: { name: 'postsError', message: schema.error.issues[0].message, code: status.INVALID_ARGUMENT }
-    }
+    throw new GrpcError(schema.error.issues[0].message, status.INVALID_ARGUMENT)
   }
 
-  /** sqlite update */
-  const updated: boolean = Boolean(
-    await sqlite<Posts>('Posts')
-      .where('id', schema.data.id)
-      .update({
-        title: schema.data.title,
-        body: schema.data.body,
-        category: schema.data.category
-      })
-  )
-
-  return {
-    error: updated
-      ? null
-      : { name: 'postsError', message: STATUS_TEXT[Status.NotFound], code: status.NOT_FOUND },
-    response: updated ? schema.data : {}
+  const updated = await updatePosts(schema.data)
+  if (!updated) {
+    throw new GrpcError(STATUS_TEXT[Status.NotFound], status.NOT_FOUND)
   }
+
+  return schema.data
 }
 
-export async function handleAddPosts (postsNew: Posts): Promise<Handle<Posts>> {
+export async function handleAddPosts (postsNew: Posts): Promise<Posts> {
   const schema = z
     .object({
       title: z.string().min(5, { message: 'title must be 5 or more characters long' }),
@@ -98,21 +65,8 @@ export async function handleAddPosts (postsNew: Posts): Promise<Handle<Posts>> {
     .safeParse(postsNew)
 
   if (!schema.success) {
-    return {
-      error: { name: 'postsError', message: schema.error.issues[0].message, code: status.INVALID_ARGUMENT }
-    }
+    throw new GrpcError(schema.error.issues[0].message, status.INVALID_ARGUMENT)
   }
 
-  /** sqlite insert */
-  const [id] = await sqlite('Posts')
-    .insert(schema.data)
-    .onConflict()
-    .ignore()
-
-  const postsItem = { ...schema.data, id }
-
-  return {
-    error: null,
-    response: postsItem
-  }
+  return await createPost(schema.data)
 }
