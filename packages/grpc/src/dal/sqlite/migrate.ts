@@ -2,7 +2,7 @@ import { Knex } from '../../deps'
 import { Tables } from './enums'
 
 export async function migrate (sqlite: Knex): Promise<void> {
-  const hasPostsTable = await sqlite.schema.hasTable('Posts')
+  const hasPostsTable = await sqlite.schema.hasTable(Tables.posts)
 
   if (!hasPostsTable) {
     await sqlite.schema.createTable(Tables.posts, (table: Knex.TableBuilder) => {
