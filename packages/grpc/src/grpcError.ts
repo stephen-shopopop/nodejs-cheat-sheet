@@ -5,7 +5,7 @@ export class GrpcError extends Error {
   constructor (message: string, status: status) {
     super(message)
     this.name = this.constructor.name
-    this.status = status
+    this.status = status ?? status
   }
 }
 
